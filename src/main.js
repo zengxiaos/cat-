@@ -3,7 +3,7 @@
     const $lastLi =$siteList.find('li.last')
     const x =localStorage.getItem('X')
     const xObject =JSON.parse(x)
-    const hashMap = xObject || [
+    const hashMap = xObject||[
   {logo:'A',url:"https://www.acfun.cn"},
   {logo:'B',url:"https://m.bilibili.com"},
 ]
@@ -17,7 +17,6 @@ const simplifyUrl=(url)=>{
 const render =()=>{
   $siteList.find(`li:not(.last)`).remove()
   hashMap.forEach((node,index)=>{
-    console.log(index)
     const $li=$(`<li>
       <div class="site">
         <div class="logo">${node.logo[0]}</div>
@@ -42,6 +41,7 @@ const render =()=>{
 }
 
 render()
+
 $(".addButton")
 .on('click',()=>{
     let url=window.prompt('你需要添加什么网址呢？')//字符串记得加引号
@@ -53,6 +53,7 @@ $(".addButton")
     hashMap.push(
       {logo:simplifyUrl(url)[0].toUpperCase(),
     url:url})
+    console.log(hashMap)
     render()
 })
 window.onbeforeunload =()=>{
@@ -60,11 +61,18 @@ window.onbeforeunload =()=>{
 localStorage.setItem('x',string)
 }
 
+$('.sousuo').on('keypress',(e)=>{
+  e.stopPropagation()
+})
+
 $(document).on('keypress',(e)=>{
   const {key}=e
   for(let i=0;i<hashMap.length;i++){
     if(hashMap[i].logo.toLowerCase()===key){
       window.open(hashMap[i].url)
     }
+
+  
+
   }
 })
